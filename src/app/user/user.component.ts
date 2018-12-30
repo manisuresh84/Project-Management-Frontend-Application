@@ -206,6 +206,9 @@ export class UserComponent implements OnInit, OnDestroy {
     
     this.timerSubscription = this.restService.getUsers().subscribe(posts => {
       this.users = posts;
+      
+      this.listUser = true;
+      
       this.subscribeToData();
     });
   }

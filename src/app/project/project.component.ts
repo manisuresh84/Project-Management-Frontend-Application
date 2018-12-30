@@ -375,6 +375,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         
     this.timerSubscription = this.restService.getViewProjects().subscribe(posts => {
       this.viewProjects = posts;
+      this.listProject = true;
       this.subscribeToData();
     });
   }

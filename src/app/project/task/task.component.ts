@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { RestServerService } from 'src/app/services/restserver.service';
 import { MessageService } from 'src/app/services/message.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { TaskInfoModel } from 'src/app/model/taskinfo.model';
 import { DataService } from 'src/app/services/data.service';
 import { ViewTaskInfoModel } from 'src/app/model/viewtask.model';
 import { DatePipe } from '@angular/common';
+import { AnonymousSubscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-task',
@@ -18,8 +19,9 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./task.component.css'],
   providers: [RestServerService]
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
 
+  private editTaskSubscription: AnonymousSubscription;
   editTaskClicked: boolean;
   defaultProjectName = "";
   defaultParentTask = "";
@@ -122,7 +124,15 @@ export class TaskComponent implements OnInit {
       this.defaultaskname = this.viewTask.taskName;
       this.value = this.viewTask.priority;
     });
-    this.data.currentEditTaskClickMessage.subscribe(editTaskClicked => this.editTaskClicked = editTaskClicked);
+    this.editTaskSubscription = this.data.currentEditTaskClickMessage.subscribe(editTaskClicked => 
+      this.editTaskClicked = editTaskClicked);
+  }
+
+  ngOnDestroy(){
+    if(this.editTaskSubscription){
+      this.editTaskSubscription.unsubscribe();
+      this.editTaskClicked = false;
+    }
   }
   openSelectProjectDialog() {
     this.messageService.selectProject(
