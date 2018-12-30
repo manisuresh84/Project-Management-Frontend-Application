@@ -1,0 +1,110 @@
+<div class="row">
+  <div>
+    <br>
+    <form (ngSubmit)="onSubmit()" #savetask="ngForm">
+      <div class="form-group row">
+        <br>
+        <label for="project" class="col-sm-2 col-form-label">{{'PROJECTNAME' | translate}}</label>
+        <div class="col-sm-5 form-inline">
+          <input type="text" id="projectname" placeholder="Project Name" class="form-control"
+           name="projectname" [ngModel]="defaultProjectName"
+           value="{{project.projectName}}" readonly>
+          <button class="btn btn-primary button5" style="float:right; width:20%" 
+          type="button" (click)="openSelectProjectDialog()">Search</button>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="task" class="col-sm-2 col-form-label">{{'TASKNAME' | translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" id="taskname" placeholder="Task Name" 
+          class="form-control" [ngModel]="defaultaskname"
+            name="taskname" required #taskname="ngModel">
+          <span class="help-block" *ngIf="!taskname.valid && taskname.touched">
+            Please enter task name!</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-5 custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customCheck1"
+          name = "isParentTask" [(ngModel)]="isParentTask">
+          <label class="custom-control-label cr" for="customCheck1">{{'PARENTTASK' | translate}}</label>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="priority" class="col-sm-2 col-form-label">{{'PRIORITY' | translate}}</label>
+        <div class="col-sm-5">
+            <ng5-slider [(value)]="value" [options]="options" (valueChange)="getProjectPriority()"></ng5-slider>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="parenttask" class="col-sm-2 col-form-label">{{'PARENTTASKLABEL' | translate}}</label>
+        <div class="col-sm-5 form-inline">
+          <input type="text" id="parenttask" placeholder="Parent Task" 
+          class="form-control" name="parenttask"
+          [ngModel]="defaultParentTask"
+          value="{{ptask.parentTaskName}}" readonly>
+          <button class="btn btn-primary button5" style="float:right; width:20%" 
+          type="button" [disabled]="isParentTask" (click)="openSelectParentTaskDialog()">Search</button>
+        </div>
+      </div>
+
+      <div class="form-group row form-inline">
+          
+          <div class="form-group mx-sm-3 mb-2">
+            &nbsp;&nbsp;
+            <label for="enddate">{{'STARTDATE' | translate}}</label>
+            <input class="form-control" placeholder="Start Date" 
+            id="startdate" name="startdate" 
+            [(ngModel)]="planModel.start_date"
+            value={{viewTask.startDate}}
+              ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()"
+              [disabled]="isParentTask"
+              required #startdate="ngModel">
+              <span class="help-block" *ngIf="!startdate.valid && startdate.touched">{{datevalidationmessage}}</span>
+          </div>
+          <div class="form-group mb-2">
+            &nbsp;&nbsp;
+            <label for="enddate">{{'ENDDATE' | translate}}</label>
+            <input class="form-control" placeholder="End Date"
+             id="enddate" name="enddate"
+             value={{viewTask.endDate}}
+              #enddate="ngModel" [(ngModel)]="planModel.end_date"
+              [disabled]="isParentTask"
+              ngbDatepicker #d1="ngbDatepicker" 
+              (click)="d1.toggle()" required>
+          </div>
+        </div>
+
+      <div class="form-group row">
+        <label for="usersearch" class="col-sm-2 col-form-label">{{'USER' | translate}}</label>
+        <div class="col-sm-5 form-inline">
+          <input type="text" id="usersearch" placeholder="User Name" 
+          class="form-control" name="usersearch"
+          [ngModel]="defaultUser"
+          value="{{selectedUser.firstName}} {{selectedUser.lastName}}" readonly>
+          <button class="btn btn-primary button5" style="float:right; width:20%" 
+          type="button" (click)="openSelectUserDialog()">Search</button>
+        </div>
+      </div>
+
+
+
+      <br>
+      <button class="btn btn-primary" type="submit" 
+      *ngIf="!editTaskClicked" [disabled]="!savetask.valid">Add Task</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" 
+      *ngIf="editTaskClicked" (click)='editTask()' [disabled]="!savetask.valid">Update</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" (click)="saveTaskForm.reset()" 
+      [disabled]="!savetask.valid">Reset</button>
+
+
+      <!-- <pre>Model: {{ model | json }}</pre> -->
+
+    </form>
+  </div>
+</div>
+

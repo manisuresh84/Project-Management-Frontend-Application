@@ -1,0 +1,88 @@
+<div class="row">
+  <div>
+    <br>
+    <form (ngSubmit)="onSubmit()" #saveuser="ngForm">
+      <div class="form-group row">
+        <br>
+        <label for="firstName" class="col-sm-2 col-form-label">{{'FIRSTNAME' | translate }}</label>
+        <div class="col-sm-5">
+          <input type="text" id="firstName" placeholder="First Name" 
+          class="form-control" [ngModel]="defaultFirstName"
+            name="firstName" required #firstName="ngModel">
+          <span class="help-block" *ngIf="!firstName.valid && firstName.touched">Please enter first name!</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label">{{'LASTNAME' | translate}}</label>
+        <div class="col-sm-5">
+          <input type="text" id="lastName" placeholder="Last Name" class="form-control" [ngModel]="defaultLastName"
+            name="lastName" required #lastName="ngModel">
+          <span class="help-block" *ngIf="!lastName.valid && lastName.touched">Please enter last name!</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="empId" class="col-sm-2 col-form-label">{{'EMPLOYEEID' | translate}}</label>
+        <div class="col-sm-3">
+          <input type="text" id="empId" OnlyNumber="true" maxlength="16" placeholder="Employee ID" class="form-control"
+            [ngModel]="defaultEmpId" name="empId" required #empId="ngModel">
+          <span class="help-block" *ngIf="!empId.valid && empId.touched">Please enter employee number!</span>
+        </div>
+      </div>
+
+      <br>
+      <button class="btn btn-primary" type="submit" [disabled]="!saveuser.valid" *ngIf="!showEdit">Add</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" *ngIf="showEdit" (click)='editUser()'>Update</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" (click)="saveUserForm.reset()" [disabled]="!saveuser.valid">Reset</button>
+
+    </form>
+    <br>
+    <hr>
+
+    <form class="form-inline" (ngSubmit)="onSearch()" #searchuser="ngForm">
+
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="searchuser" class="sr-only">Search User</label>
+        <input type="text" class="form-control" id="searchuser" placeholder="Search..."
+        [(ngModel)]="filteredUserInfo" 
+        (focusout)="focusOutFunction()"
+        name="searchuser">
+      </div>
+      <div class="form-group mb-2">
+        &nbsp;&nbsp;
+        <label for="sort">{{'SORTUSERLABEL' | translate}}</label>
+      </div>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary btn-md" type="button" (click)='sortUserByFirstName()'>First Name</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary btn-md" type="button" (click)='sortUserByLastName()'>Last Name</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary btn-md" type="button" (click)='sortUserByEmpId()'>Employee ID</button>
+    </form>
+
+    
+    <div *ngIf="listUser">
+        <ng-scrollbar style="height:300px; width: 1200px;">
+      <div *ngFor="let user of users | filter:filteredUserInfo:'firstName'">
+        <hr style="border-style: dotted;" />
+        <app-user-transaction [value]=user (userEvent)='receiveMessage($event)' 
+        (editButtonEvent)='receiveEditButton($event)'
+        (refreshUsers)='refreshUser($event)'></app-user-transaction>
+        <hr style="border-style: dotted;" />
+      </div>
+      </ng-scrollbar>
+    </div>
+
+
+    <div *ngIf="sortListUser">
+      <div *ngFor="let user of users.content | filter:filteredUserInfo:'firstName'">
+        <hr style="border-style: dotted;" />
+        <app-user-transaction [value]=user (userEvent)='receiveMessage($event)' (editButtonEvent)='receiveEditButton($event)'
+        (refreshUsers)='refreshUser($event)'></app-user-transaction>
+        <hr style="border-style: dotted;" />
+      </div>
+    </div>  
+
+  </div>
+</div>

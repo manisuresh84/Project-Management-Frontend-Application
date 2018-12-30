@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">{{'SELECTPROJECT' | translate}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+      <h4>{{'FILTERPROJECT' | translate}}</h4>
+      <input type="text" class="form-control" id="pname" [(ngModel)]="filteredProjectInfo" 
+      placeholder="Project Name..." name="pname">
+      <br>
+      <ng-scrollbar style="height:100px; width: 300px;">
+  
+          <div *ngIf="listProject">
+            <div *ngFor="let project of projects | filter:filteredProjectInfo:'projectName'">
+              <label for="project_{{project.projectName}}">
+                <input id="project_{{project.projectName}}" [value]='project'
+                 (change)="onSelectionChange()" type="radio" name="projects"
+                  [(ngModel)]="radioSelected">
+                {{project.projectName}}
+              </label>
+            </div>
+          </div>
+        </ng-scrollbar>
+        <br>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="selectProject()" [disabled]="!selectedProject">Select Project</button>
+      <button type="button" class="btn btn-primary" (click)="bsModalRef.hide()">Close</button>
+  </div>
+  

@@ -1,0 +1,31 @@
+<div bsModal #childModal="bs-modal">
+
+<div class="modal-header">
+    <h4 align="center" class="modal-title">Search User</h4>
+    <button type="button" class="close" (click)="modalRef.hide()">
+      &times;
+    </button>
+  </div>
+  <div class="modal-body">
+      <h4>Filter by first name</h4>
+      <input type="text" class="form-control" id="fname" [(ngModel)]="filteredUserInfo" placeholder="First Name..." name="fname">
+      <br>
+      <ng-scrollbar style="height:100px; width: 200px;">
+  
+          <div *ngIf="listUser">
+            <div *ngFor="let user of users | filter:filteredUserInfo:'firstName'">
+              <label for="user_{{user.firstName}}">
+                <input id="user_{{user.firstName}}" [value]='user' (change)="onSelectionChange()" type="radio" name="users"
+                  [(ngModel)]="radioSelected">
+                {{user.firstName}}, {{user.lastName}}
+              </label>
+            </div>
+          </div>
+        </ng-scrollbar>
+        <br>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="selectUser()" [disabled]="!selectedUser">Select Manager</button>
+    <button type="button" class="btn btn-primary" (click)="modalRef.hide()">Close</button>
+  </div>
+</div>

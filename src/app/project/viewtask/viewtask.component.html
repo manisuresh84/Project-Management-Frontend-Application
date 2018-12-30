@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div>
+      <br>
+      <form class="form-inline" #viewproject="ngForm">
+
+        <div class="form-group mx-sm-3 mb-2">
+          <label for="searchproject">{{'PROJECTNAME' | translate}}</label>
+          <input type="text" class="form-control" id="searchproject"
+           placeholder="Search..." name="searchproject" value="{{project.projectName}}"
+            readonly>
+          &nbsp;&nbsp;
+          <button class="btn btn-primary btn-md button5" type="button" (click)='searchProject()'>Search</button>
+        </div>
+        <!-- <div class="form-group mb-2">
+          &nbsp;&nbsp;
+          <label for="sort">Sort Task By:</label>
+        </div>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByStartDate()'>Start Date</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByEndDate()'>End Date</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByPriority()'>Priority</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByCompleted()'>Completed</button> -->
+      </form>
+      <br>
+      <hr>
+    </div>
+    <ag-grid-angular #agGrid id="myGrid" [enableSorting]="true" [enableFilter]="true" [pagination]="true" 
+    style="width: 1200px; height: 500px;"
+      class="ag-theme-balham" [rowData]="rowData" [columnDefs]="columnDefs"
+      [frameworkComponents]="frameworkComponents"
+      [context]="context">
+    </ag-grid-angular>
+  </div>

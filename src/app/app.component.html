@@ -1,0 +1,29 @@
+<br>
+<div class="container">
+  <div class="row">
+    <div>
+      <h3><b>Project Manager</b></h3>
+      <ul class="nav nav-tabs" style="border-bottom:0px">
+        <li role="presentation"><a routerLink="project">Add Project</a></li>
+        <li role="presentation"><a routerLink="task">Add Task</a></li>
+        <li role="presentation"><a routerLink="user">Add User</a></li>
+        <li role="presentation"><a routerLink="viewtask">View Task</a></li>
+        <li class="dropdown nav navbar-nav navbar-right">
+          <a data-toggle="collapse" href="#locale">Locale<span class="caret"></span></a>
+          <div id="locale">
+            <ul>
+              <li><a (click)="setLang('en')" style="cursor: pointer;">English</a></li>
+              <li><a (click)="setLang('de')" style="cursor: pointer;">German</a></li>
+              <li><a (click)="setLang('fr')" style="cursor: pointer;">French</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

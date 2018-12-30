@@ -1,0 +1,48 @@
+
+.nav-tabs>li>a {
+    color: black;
+    font-size: 20px;
+    }
+    
+    .nav-tabs > li > a:hover, .x-nav-tabs > .active > a, .x-nav-tabs > .active > a:hover {
+    color: blue;
+    background: white;
+    }
+
+    <!-- For Model CSS-->
+    .hidden{
+        display:none;
+    }
+    .show{
+        display:block;
+    }
+    
+    #modal-container {
+        position:  fixed;
+        top: 300px;
+        left: 50%;
+        width: 375px;
+        background: white;
+        margin-left: -187.5px;
+        text-align: center;
+        box-shadow: 0px 0px 2px 1px black;
+        z-index: 100;
+    }
+    
+    #overlay {
+        position: absolute;
+        top: 0px;
+        left:  0px;
+        z-index:  99;
+        background:  rgba(0,0,0,0.8);
+        width:  100%;
+        height: 100%;
+    }
+
+    /* .image{
+        height:40em; 
+        background-size:cover;
+        width:auto;
+        background-image:url('http://websitepresentation.com/wp-content/uploads/powerpoint-background-free-premium-templates-throughout-professional-background-for-powerpoint-presentation.jpg');
+        background-position:50% 50%;
+      } */

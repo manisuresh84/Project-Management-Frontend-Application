@@ -1,0 +1,30 @@
+<div id="container">
+  <div id="row">
+
+    <div id="left">
+      <p><b>{{'PROJECTNAME' | translate}}</b> {{value.projectName}}</p>
+      <p><b>{{'PROJECTVIEWTOTTASK' | translate}}</b> {{value.numOfTasks}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+         &nbsp; &nbsp; &nbsp;
+         <b>{{'COMPLETED' | translate}}</b> {{value.numOfTasksCompleted}}</p>
+      <p><b>{{'STARTDATE' | translate}}</b> {{value.startDate}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>{{'ENDDATE' | translate}}</b> {{value.endDate}}</p>
+    </div>
+
+    <div id="middle">
+      <p><b>{{'PROJECTPRIORITYVIEW' | translate}}</b></p> 
+      <p>{{value.priority}}</p>
+    </div>
+    <div></div>
+
+    <div id="right">
+        <button class="btn btn-primary pull-right btn-block" 
+        (click)="onEditProject()"
+        type="button">Update</button>
+        <br>
+        <br>
+        <button class="btn btn-primary pull-right btn-block"
+        (click)="onSuspendProject()"
+        type="button">Suspend</button>
+    </div>   
+  </div>
+</div>

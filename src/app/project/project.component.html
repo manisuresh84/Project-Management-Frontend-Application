@@ -1,0 +1,118 @@
+<div class="row">
+  <div>
+    <br>
+    <form (ngSubmit)="onSubmit()" #saveproject="ngForm">
+      <div class="form-group row">
+        <br>
+        <label for="project_title" class="col-sm-2 col-form-label">{{'PROJECTNAME' | translate}}</label>
+        <div class="col-sm-5 form-inline">
+
+          <input type="text" id="projectTitle" placeholder="Project Name" class="form-control"
+           [ngModel]="defaultProjectTitle"
+            name="projectTitle" required #projectTitle="ngModel">
+          <span class="help-block" *ngIf="!projectTitle.valid && projectTitle.touched">Please enter project title/name!</span>
+
+        </div>
+      </div>
+      <div class="form-group row form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="checkbox" class="custom-control-input" id="customCheck1" name="isDate" [(ngModel)]="isDate">
+          <label class="custom-control-label cr" for="customCheck1">{{'SELECTDATEFROMPROJECT' | translate}}</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          &nbsp;&nbsp;
+          <input class="form-control" placeholder="Start Date" 
+          id="startdate" value={{project.startDate}}
+           name="startdate" [(ngModel)]="planModel.start_date"
+            ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" 
+            [disabled]="!isDate" required #startdate="ngModel">
+          <span class="help-block" *ngIf="startdate.touched && errorFlag">{{datevalidationmessage}}</span>
+        </div>
+        <div class="form-group mb-2">
+          &nbsp;&nbsp;
+          <input class="form-control" placeholder="End Date" 
+          id="enddate" value={{project.endDate}}
+          name="enddate" #enddate="ngModel" [(ngModel)]="planModel.end_date"
+            ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" [disabled]="!isDate" required>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="priority" class="col-sm-2 col-form-label">{{'PRIORITY' | translate}}</label>
+        <div class="col-sm-5">
+          <ng5-slider [(value)]="value" [options]="options" (valueChange)="getProjectPriority()"></ng5-slider>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="manager" class="col-sm-2 col-form-label">{{'PROJECTMANAGER' | translate}}</label>
+        <div class="col-sm-5 form-inline">
+          <input type="text" id="managersearch" placeholder="Manager First Name" 
+          class="form-control" 
+            name="managersearch" 
+            [ngModel]="defaultManager"
+            #managersearch="ngModel"
+            value="{{user.firstName}} {{user.lastName}}" readonly>
+          <button class="btn btn-primary button5" style="float:right; width:20%" type="button"
+           (click)="openSelectManagerDialog()">Search</button>
+        </div>
+      </div>
+
+      <br>
+      <button class="btn btn-primary" type="submit" [disabled]="!saveproject.valid" *ngIf="!showEdit">Add</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" *ngIf="showEdit" (click)='editProject()'>Update</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-primary" type="button" (click)="saveProjectForm.reset()" [disabled]="!saveproject.valid">Reset</button>
+    </form>
+    <br>
+    <hr>
+
+    <form (ngSubmit)="onProjectSearch()" #searchproject="ngForm">
+
+      <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control" id="searchproject" placeholder="Search..." [(ngModel)]="filteredProjectInfo"
+          name="searchproject">
+      </div>
+      <div class="form-group mb-2 form-inline">
+        &nbsp;&nbsp;
+        <label for="sort">{{'PROJECTSORTBY' | translate}}</label>
+
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByStartDate()'>Start Date</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByEndDate()'>End Date</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByPriority()'>Priority</button>
+        &nbsp;&nbsp;
+        <button class="btn btn-primary btn-md" type="button" (click)='sortProjectByStatusCompleted()'>Completed</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="listProject">
+  <ng-scrollbar style="height:300px; width: 1200px;">
+    <div *ngFor="let project of viewProjects | filter:filteredProjectInfo:'projectName'">
+
+      <app-project-transaction [value]=project 
+      (projectEditEvent)='receiveMessage($event)' 
+      (editButtonEvent)='receiveEditButton($event)'></app-project-transaction>
+      <br>
+
+    </div>
+  </ng-scrollbar>
+</div>
+
+<div *ngIf="sortListProject">
+  <ng-scrollbar style="height:300px; width: 1200px;">
+    <div *ngFor="let project of viewProjects  | filter:filteredProjectInfo:'projectName'">
+
+      <app-project-transaction [value]=project 
+      (projectEditEvent)='receiveMessage($event)' 
+      (editButtonEvent)='receiveEditButton($event)'></app-project-transaction>
+      <br>
+
+    </div>
+  </ng-scrollbar>
+</div>
