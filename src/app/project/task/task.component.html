@@ -10,7 +10,7 @@
            name="projectname" [ngModel]="defaultProjectName"
            value="{{project.projectName}}" readonly>
           <button class="btn btn-primary button5" style="float:right; width:20%" 
-          type="button" (click)="openSelectProjectDialog()">Search</button>
+          type="button" [disabled] = "editTaskClicked" (click)="openSelectProjectDialog()">Search</button>
         </div>
       </div>
       <div class="form-group row">
