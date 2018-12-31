@@ -13,7 +13,8 @@ export class ViewTaskInfoModel {
         public endDate: string,
         public employeeId: string,
         public userStatus : string,
-        public userRole: string
+        public userRole: string,
+        public taskStatus: string
         ) {
     }
 }

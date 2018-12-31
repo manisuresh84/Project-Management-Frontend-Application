@@ -103,7 +103,8 @@ export class TaskComponent implements OnInit, OnDestroy {
     userId: '',
     userRole: '',
     userStatus: '',
-    employeeId: ''
+    employeeId: '',
+    taskStatus:''
   }
 
   constructor(private restService: RestServerService, private router: Router,
@@ -177,7 +178,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     } else {
 
       if(typeof this.selectedUser != 'undefined'){
-        if(this.selectedUser.taskId !== '0'){
+        if(this.selectedUser.taskId > "0"){
           this.saveTaskForm.reset();
           throw new Error('User already assigned task#' + this.selectedUser.taskId + 
           ',hence cannot proceed further, please select another user!');

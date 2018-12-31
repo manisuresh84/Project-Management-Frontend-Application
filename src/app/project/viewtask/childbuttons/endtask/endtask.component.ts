@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 
 @Component({
     selector: 'child-endtaskcell',
-    template: `<span><button (click)="invokeEndTask()" 
+    template: `<span><button [disabled] = "isEndTask" (click)="invokeEndTask()" 
     class="btn btn-primary btn-md">End Task</button></span>`,
     styles: [
         `.button {
@@ -26,7 +26,7 @@ import { Router } from "@angular/router";
 })
 export class EndtaskComponent implements ICellRendererAngularComp {
     public params: any;
-
+    isEndTask : boolean;
     task: TaskInfoModel = {
       taskId: '',
       taskName: '',
@@ -44,6 +44,13 @@ export class EndtaskComponent implements ICellRendererAngularComp {
 
     agInit(params: any): void {
         this.params = params;
+
+        if(this.params.node.data.taskStatus === 'Completed'){
+          this.isEndTask = true;
+        }else{
+          this.isEndTask = false;
+        }
+
     }
 
     public invokeEndTask() {

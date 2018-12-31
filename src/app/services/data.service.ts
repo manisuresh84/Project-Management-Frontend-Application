@@ -19,7 +19,8 @@ export class DataService {
         userId:'',
         userRole:'',
         userStatus:'',
-        employeeId:''
+        employeeId:'',
+        taskStatus:''
       }
 
   private messageSource = new BehaviorSubject('default message');

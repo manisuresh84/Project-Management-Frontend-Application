@@ -54,7 +54,8 @@ export class ViewtaskComponent implements OnInit {
     userId:'',
     userRole:'',
     userStatus:'',
-    employeeId:''
+    employeeId:'',
+    taskStatus:''
   };
 
   ptask: ParentTaskInfoModel = {
@@ -105,6 +106,7 @@ export class ViewtaskComponent implements OnInit {
         this.restService.getViewProjectTasks(this.project.projectId)
           .subscribe((response) => {
             this.viewtasks = response;
+            console.log(this.viewtasks);
             this.rowData = this.viewtasks;
           }
             ,

@@ -8,7 +8,7 @@ import { DataService } from "src/app/services/data.service";
 
 @Component({
     selector: 'child-editcell',
-    template: `<span><button (click)="invokeEditTask()" 
+    template: `<span><button [disabled] = "isEndTask" (click)="invokeEditTask()" 
     class="btn btn-primary btn-md">Edit Task</button></span>`,
     styles: [
         `.button {
@@ -33,6 +33,7 @@ export class EdittaskComponent implements ICellRendererAngularComp {
 
     message:string;
     editTaskClicked: boolean;
+    isEndTask : boolean;
 
     task: TaskInfoModel = {
         taskId: '',
@@ -59,11 +60,17 @@ export class EdittaskComponent implements ICellRendererAngularComp {
         employeeId:'',
         userId:'',
         userRole:'',
-        userStatus:''
+        userStatus:'',
+        taskStatus:''
       }
   
     agInit(params: any): void {
         this.params = params;
+        if(this.params.node.data.taskStatus === 'Completed'){
+            this.isEndTask = true;
+          }else{
+            this.isEndTask = false;
+          }
     }
 
     constructor(private router: Router, private messageService: MessageService,
@@ -86,6 +93,7 @@ export class EdittaskComponent implements ICellRendererAngularComp {
         this.viewTask.userRole = this.params.node.data.userRole;
         this.viewTask.userStatus = this.params.node.data.userStatus;
         this.viewTask.employeeId = this.params.node.data.employeeId;
+        this.viewTask.taskStatus = this.params.node.data.taskStatus;
 
         this.data.changeEditTaskInfo(this.viewTask);
         this.data.changeEditTaskClickInfo(true);
